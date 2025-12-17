@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeffXy Crash - Typing Lyrics Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(
+                ellipse at top,
+                #020617,
+                #1f2937
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e5e7eb;
+            font-family: 'Inter', sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #9ca3af;
+            margin-bottom: 24px;
+        }
+
+        .lyrics-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(14px);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 24px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .lyric-line {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .lyric-line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .controls {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-playing {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-playing:hover {
+            background: #2563eb;
+        }
+
+        .btn-repeat {
+            background: transparent;
+            color: #e5e7eb;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-repeat:hover {
+            background: rgba(229, 231, 235, 0.1);
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .lyric-line {
+                font-size: 1rem;
+            }
+            .lyrics-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DeffXy Crash</h1>
+        <div class="subtitle">DeffXy Animation</div>
+
+        <div class="lyrics-card" id="lyricsContainer"></div>
+
+        <div class="controls">
+            <button class="btn btn-playing" id="playBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M6.25 5A1.75 1.75 0 0 0 4.5 6.75v2.5c0 .966.784 1.75 1.75 1.75h2.5A1.75 1.75 0 0 0 10.5 9.25v-2.5A1.75 1.75 0 0 0 8.75 5h-2.5zm0 1.75c0-.138.112-.25.25-.25h2.5c.138 0 .25.112.25.25v2.5c0 .138-.112.25-.25.25h-2.5a.25.25 0 0 1-.25-.25v-2.5z"/>
+                </svg>
+                Playing
+            </button>
+            <button class="btn btn-repeat" id="repeatBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M10.5 6.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V7a.5.5 0 0 1 .5-.5h3zm-3-1a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V5.5z"/>
+                </svg>
+                Ulangi
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const lyrics = [
+            "Bersandar padaku, taruh di bahuku", 
+            "Relakan semua, bebas semaumu", 
+            "Percayalah, ini sayang terlewatkanmu", 
+            "Kusampaikan dalam nyanyian", 
+            "bergema sampai selamanya", 
+            "dunia pasti ada akhirnya", 
+            "bintang-bintang pun", 
+            "umur nya maka tenang saja", 
+            "di sini berdua nikmati", 
+            "sementara yang ada"
+        ];
+
+        const lyricsContainer = document.getElementById('lyricsContainer');
+        const playBtn = document.getElementById('playBtn');
+        const repeatBtn = document.getElementById('repeatBtn');
+
+        let isPlaying = false;
+
+        function startAnimation() {
+            if (isPlaying) return;
+            isPlaying = true;
+            lyricsContainer.innerHTML = '';
+
+            // Buat elemen untuk setiap baris lirik
+            const lineElements = [];
+            lyrics.forEach((line, index) => {
+                const lineElement = document.createElement('div');
+                lineElement.className = 'lyric-line';
+                lineElement.textContent = '';
+                lyricsContainer.appendChild(lineElement);
+                lineElements.push(lineElement);
+            });
+
+            // Fungsi untuk mengetik satu baris
+            function typeLine(index) {
+                if (index >= lyrics.length) {
+                    isPlaying = false;
+                    return;
+                }
+
+                const currentLine = lyrics[index];
+                const lineElement = lineElements[index];
+                let charIndex = 0;
+
+                // Tampilkan baris ini
+                lineElement.classList.add('visible');
+
+                const typingInterval = setInterval(() => {
+                    if (charIndex <= currentLine.length) {
+                        lineElement.textContent = currentLine.slice(0, charIndex);
+                        charIndex++;
+                    } else {
+                        clearInterval(typingInterval);
+                        // Scroll ke bawah agar baris terbaru terlihat
+                        lyricsContainer.scrollTop = lyricsContainer.scrollHeight;
+                        // Lanjut ke baris berikutnya
+                        setTimeout(() => {
+                            typeLine(index + 1);
+                        }, 300); // Jeda 300ms antar baris
+                    }
+                }, 200); // Kecepatan pengetikan
+            }
+
+            // Mulai animasi dari baris pertama
+            typeLine(0);
+        }
+
+        function restartAnimation() {
+            isPlaying = false;
+            startAnimation();
+        }
+
+        playBtn.addEventListener('click', startAnimation);
+        repeatBtn.addEventListener('click', restartAnimation);
+    </script>
+</body>
+</html>
