@@ -14,7 +14,7 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            touch-action: none; /* Prevents touch delays */
+            touch-action: none;
         }
         .video-container {
             width: 100%;
@@ -22,14 +22,14 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            position: relative; /* For watermark positioning */
+            position: relative;
         }
         video {
             width: 100%;
             height: auto;
             display: block;
-            pointer-events: none;
-            object-fit: cover; /* Better scaling */
+            /* pointer-events: none; ← HAPUS ini sementara untuk debug */
+            object-fit: cover;
         }
         .watermark {
             position: absolute;
@@ -43,13 +43,11 @@
             z-index: 10;
             text-align: center;
             width: 100%;
-            will-change: transform; /* Performance optimization */
         }
-        /* Preloader untuk video */
         .video-container::before {
-            content: "";            position: absolute;
-            top: 0;
-            left: 0;
+            content: "";
+            position: absolute;
+            top: 0;            left: 0;
             width: 100%;
             height: 100%;
             background: black;
@@ -68,44 +66,45 @@
             muted 
             loop 
             playsinline
-            preload="metadata" <!-- Optimized preloading -->
+            preload="auto"
             disablepictureinpicture
             controlsList="nodownload nofullscreen noremoteplayback"
         >
-            <!-- Multiple format support for better compatibility -->
             <source src="https://files.catbox.moe/1z1pm9.mp4" type="video/mp4">
-            Your browser does not support the video tag.
+            Browser Anda tidak mendukung video.
         </video>
-        <div class="watermark">DeffXyX Crasher</div>
+        <div class="watermark">WhypsX Crasher</div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.querySelector('video');
+
+            // Coba mainkan segera
+            const playPromise = video.play();
             
-            // Optimized loading strategy
-            video.preload = 'auto';
-            
-            // Play on interaction if autoplay fails (mobile fallback)
-            const playVideo = () => {
-                video.play().catch(() => {
-                    // Silent catch for mobile restrictions
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // Jika gagal, coba lagi saat ada interaksi (fallback)
+                    const resumePlay = () => {
+                        video.play().catch(() => {});
+                        window.removeEventListener('touchstart', resumePlay);
+                        window.removeEventListener('click', resumePlay);
+                    };
+                    window.addEventListener('touchstart', resumePlay, { once: true });
+                    window.addEventListener('click', resumePlay, { once: true });
                 });
-                document.removeEventListener('touchstart', playVideo);
-                document.removeEventListener('mousedown', playVideo);
-            };
-            
-            // Fallback autoplay triggers
-            document.addEventListener('touchstart', playVideo, { once: true });            document.addEventListener('mousedown', playVideo, { once: true });
-            
-            // Performance optimization: pause when not visible
-            const observer = new IntersectionObserver((entries) => {
+            }
+
+            // Opsional: pause saat tidak terlihat (hemat baterai/data)            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (!entry.isIntersecting) video.pause();
-                    else video.play().catch(() => {});
+                    if (entry.isIntersecting) {
+                        video.play().catch(() => {});
+                    } else {
+                        video.pause();
+                    }
                 });
             }, { threshold: 0.1 });
-            
             observer.observe(video);
         });
     </script>
