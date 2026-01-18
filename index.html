@@ -198,6 +198,7 @@
         <div class="welcome">Selamat datang, <span id="displayName">User</span>!</div>
         <p>Kamu sudah login. Navigasi tersedia di bawah.</p>
         <body>
+        <body>
   <button class="logout-btn" onclick="logout()">Logout</button>
 
   <script>
@@ -260,21 +261,22 @@
             }
         };
 
-        function login() {
-            const username = document.getElementById("username").value.trim();
-            const password = document.getElementById("password").value;
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorDiv = document.getElementById("error");
 
-            if (username=== "DeffXy" || password=== "1") {
-                alert("Harap isi username dan password!");
-                return;
-            }
-
-            // Simpan ke localStorage (tanpa enkripsi untuk demo sederhana)
+      // Ganti dengan username & password yang kamu inginkan
+      if (username === "DeffXy" && password === "1") {
+        // Simpan ke localStorage (tanpa enkripsi untuk demo sederhana)
             localStorage.setItem("loggedInUser", username);
 
             // Tampilkan halaman utama
             showMainPage(username);
-        }
+      } else {
+        errorDiv.textContent = "Username atau password salah!";
+      }
+    }
 
         function showMainPage(username) {
             document.getElementById("loginPage").style.display = "none";
@@ -293,4 +295,4 @@
         // Tambahkan tombol logout jika diperlukan
     </script>
 </body>
-  </html>
+</html>
