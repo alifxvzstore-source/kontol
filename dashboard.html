@@ -123,12 +123,13 @@
             <span class="nav-text">Nonton</span>
         </div>
     </div>
-    <!DOCTYPE html>
+    
+                <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Video Tanpa Tombol Play</title>
+    <title>DeffXy Crasher</title>
     <style>
         body {
             margin: 0;
@@ -141,21 +142,24 @@
             overflow: hidden;
             touch-action: none;
         }
-        .video-container {
+
+        .video-container.slide {
             width: 100%;
-            max-width: 400px;
+            max-width: 200px; /* 👈 INI YANG PENTING — BATAS LEBAR VIDEO */
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
             position: relative;
         }
-        video {
+
+        .video-container.slide video {
             width: 100%;
             height: auto;
             display: block;
-            /* pointer-events: none; ← HAPUS ini sementara untuk debug */
+            border-radius: 8px;
             object-fit: cover;
         }
+
         .watermark {
             position: absolute;
             bottom: 10px;
@@ -169,23 +173,15 @@
             text-align: center;
             width: 100%;
         }
-        .video-container::before {
-            content: "";
-            position: absolute;
-            top: 0;            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            z-index: 5;
-            animation: fadeOut 1s forwards;
-        }
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
+        @media (max-width: 480px) {
+            .video-container.slide {
+                max-width: 160px; /* Lebih kecil di HP */
+            }
         }
     </style>
 </head>
 <body>
-    <div class="video-container">
+    <div class="video-container slide">
         <video 
             autoplay 
             muted 
@@ -195,7 +191,7 @@
             disablepictureinpicture
             controlsList="nodownload nofullscreen noremoteplayback"
         >
-            <source src="https://github.com/alifxvzstore-source/alifxvzstore-source.github.io/raw/refs/heads/main/lv_0_20260118194826.mp4" type="video/mp4">
+            <source src="https://github.com/alifxvzstore-source/my-video-host/raw/refs/heads/main/1768743325023.mp4">
             Browser Anda tidak mendukung video.
         </video>
         <div class="watermark">DeffXy Crasher</div>
@@ -205,12 +201,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.querySelector('video');
 
-            // Coba mainkan segera
             const playPromise = video.play();
             
             if (playPromise !== undefined) {
                 playPromise.catch(() => {
-                    // Jika gagal, coba lagi saat ada interaksi (fallback)
                     const resumePlay = () => {
                         video.play().catch(() => {});
                         window.removeEventListener('touchstart', resumePlay);
@@ -221,15 +215,14 @@
                 });
             }
 
-            // Opsional: pause saat tidak terlihat (hemat baterai/data)            const observer = new IntersectionObserver((entries) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         video.play().catch(() => {});
                     } else {
                         video.pause();
                     }
-                });
-            }, { threshold: 0.1 });
+                });            }, { threshold: 0.1 });
             observer.observe(video);
         });
     </script>
