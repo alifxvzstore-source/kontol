@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Home</title>
+    <style>
+        body {
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Halaman Login */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            gap: 15px;
+        }
+
+        .login-container input {
+            width: 80%;
+            max-width: 300px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #1e1e1e;
+            color: white;
+        }
+
+        #error {
+            color: #ff5555;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        .login-container button {
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 12px 30px;            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Konten Utama (setelah login) */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .welcome {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .logout-btn {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Menu Navigasi Bawah */
+        .bottom-nav {
+            width: 100%;
+            background-color: #2a2a2a;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            border-top: 2px solid #ff3333;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            color: #cccccc;
+            transition: all 0.3s ease;            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: #ff3333;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-item.active {
+            background-color: rgba(255, 51, 51, 0.1);
+            transform: scale(1.05);
+        }
+
+        .icon-home::before { content: "🏠"; }
+        .icon-whatsapp::before { content: "💬"; }
+        .icon-dashboard::before { content: "👻"; }
+        .icon-tools::before { content: "⚙️"; }
+        .icon-bokep::before { content: "🥵"; }
+    </style>
+</head>
+<body>
+    <!-- Halaman Login -->
+    <div id="loginPage" class="login-container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username" autocomplete="off" />
+        <input type="password" id="password" placeholder="Password" />
+        <div id="error"></div>
+        <button onclick="login()">Masuk</button>
+    </div>
+    
+    
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DeffXy Crasher</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        .video-container.slide {
+            width: 100%;
+            max-width: 200px; /* 👈 INI YANG PENTING — BATAS LEBAR VIDEO */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .video-container.slide video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            text-shadow: 0 0 5px #9900ff, 0 0 10px #9900ff;
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+        }
+        @media (max-width: 480px) {
+            .video-container.slide {
+                max-width: 160px; /* Lebih kecil di HP */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container slide">
+        <video 
+            autoplay 
+            muted 
+            loop 
+            playsinline
+            preload="auto"
+            disablepictureinpicture
+            controlsList="nodownload nofullscreen noremoteplayback"
+        >
+            <source src="https://github.com/alifxvzstore-source/my-video-host/raw/refs/heads/main/1768745018979.mp4">
+            Browser Anda tidak mendukung video.
+        </video>
+        <div class="watermark">DeffXy Crasher</div>
+    </div>
+    <!-- Halaman Utama (Setelah Login) -->
+    <div id="mainPage" class="main-content">
+        <div class="welcome">Selamat datang, <span id="displayName">User</span>!</div>
+        <p>Kamu sudah login. Navigasi tersedia di bawah.</p>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Putar Musik dari Link</title>
+</head>
+<body>
+
+  <h2>Player Musik Online</h2>
+  
+  <!-- Ganti URL di bawah ini dengan link musikmu -->
+  <audio id="myAudio" src="https://files.cloudkuimages.guru/audios/0e45e7fd21d6.mp3" controls preload="none"></audio>
+
+
+</body>
+</html>
+    </div>
+
+    <!-- Menu Navigasi Bawah -->
+    <div id="bottomNav" class="bottom-nav" style="display: none;">        <div class="nav-item active">
+            <span class="nav-icon icon-home"></span>
+            <span class="nav-text">Home</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='whatsapp.html'">
+            <span class="nav-icon icon-whatsapp"></span>
+            <span class="nav-text">WhatsApp</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='dashboard.html'">
+            <span class="nav-icon icon-dashboard"></span>
+            <span class="nav-text">bug-system</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='tools.html'">
+            <span class="nav-icon icon-tools"></span>
+            <span class="nav-text">Tools</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='bokep.html'">
+            <span class="nav-icon icon-bokep"></span>
+            <span class="nav-text">Nonton</span>
+        </div>
+    </div>
+
+    <script>
+        // 👇 Daftar user yang diizinkan (bisa ditambah sesuai kebutuhan)
+        const validUsers = {
+            "DeffXy": "1",
+            "Nelzz": "123", 
+            "AGUSXALIP": "AGUSXALIP", 
+            "jull": "ganteng",
+            "yaaz": "blue", 
+            "irsad": "irsad", 
+            "fik": "Phhiop122", 
+        };
+
+        // Cek apakah sudah login saat halaman dimuat
+        window.onload = function () {
+            const savedUser = localStorage.getItem("loggedInUser");
+            if (savedUser && validUsers[savedUser] !== undefined) {
+                showMainPage(savedUser);
+            } else {
+                showLoginPage();
+            }
+        };
+
+        function login() {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+            const errorDiv = document.getElementById("error");
+
+            if (validUsers[username] === password) {
+                localStorage.setItem("loggedInUser", username);
+                showMainPage(username);                errorDiv.textContent = "";
+            } else {
+                errorDiv.textContent = "Username atau password salah!";
+            }
+        }
+
+        function showMainPage(username) {
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("mainPage").style.display = "block";
+            document.getElementById("bottomNav").style.display = "flex";
+            document.getElementById("displayName").textContent = username;
+        }
+
+        function showLoginPage() {
+            document.getElementById("loginPage").style.display = "flex";
+            document.getElementById("mainPage").style.display = "none";
+            document.getElementById("bottomNav").style.display = "none";
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            showLoginPage();
+        }
+    </script>
+</body>
+</html>
