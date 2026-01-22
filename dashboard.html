@@ -2,30 +2,31 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>Scroll Otomatis - Lebar Otomatis</title>
+  <title>Scroll Otomatis - Lebar Normal</title>
   <style>
     .auto-scroll-container {
-      /* Lebar otomatis sesuai isi */
       display: inline-block;
-      max-width: 95vw;        /* Jangan lebih dari 95% layar */
-      width: fit-content;     /* Ikut lebar konten */
+      max-width: 95vw;
+      min-width: 200px;          /* 👈 MINIMUM LEBAR */
+      width: fit-content;
       height: 300px;
       overflow-y: hidden;
       position: relative;
       background: #0d0d0d;
       border: 2px solid #333;
-      padding: 10px;
+      padding: 15px;
       font-family: 'Courier New', monospace;
       color: white;
-      margin: 20px auto;      /* Tengahin */
+      margin: 20px auto;
       box-sizing: border-box;
+      word-wrap: break-word;     /* 👈 Biar teks panjang pindah baris */
     }
 
     .scroll-content {
       animation: autoScroll 25s linear infinite;
       position: absolute;
       width: 100%;
-      white-space: nowrap;    /* Biar teks panjang gak pindah baris (opsional) */
+      line-height: 1.6;
     }
 
     @keyframes autoScroll {
@@ -33,11 +34,10 @@
       to   { transform: translateY(-100%); }
     }
 
-    /* Responsif: di HP, jangan kepotong */
     @media (max-width: 480px) {
       .auto-scroll-container {
         width: 95vw !important;
-        white-space: normal;
+        min-width: auto;
       }
     }
   </style>
@@ -46,9 +46,18 @@
 
   <div class="auto-scroll-container">
     <div class="scroll-content">
-     
-
-<!DOCTYPE html>
+      <p>Line 1: Ini adalah baris pertama.</p>
+      <p>Line 2: Ini contoh teks yang sedikit lebih panjang — biar lebar container nggak kecil.</p>
+      <p>Line 3: Kalau teksnya pendek, kita kasih min-width biar tetap enak dilihat.</p>
+      <p>Line 4: WA: 6288215310412 | Telegram: @ALIFXYOFFICIAL</p>
+      <p>Line 5: Harga mulai 5K aja! Dijamin work!</p>
+      <p>Line 6: Fitur: Bug WhatsApp, DOXING, Spam Bot, dll.</p>
+      <p>Line 7: Jangan lupa share ke temanmu!</p>
+      <p>Line 8: Testimoni: “Mantap bro, berhasil!”</p>
+      <p>Line 9: Garansi 100% uang kembali jika gagal 😎</p>
+      <p>Line 10: Kunjungi channel kami: https://whatsapp.com/channel/0029VbBfFwrlRokncPt22d</p>
+      <!-- Tambahkan lebih banyak -->
+   <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
