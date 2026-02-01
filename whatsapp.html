@@ -98,6 +98,515 @@
 </head>
 <body>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JUSTIN APPS V25</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0515;
+      --card-bg: #1a0a2e;
+      --card-hover: #2a103e;
+      --accent: linear-gradient(135deg, #ff00cc, #00ccff);
+      --accent-dark: #2a004d;
+      --text: #e0d6f0;
+      --text-light: #a090c0;
+      --red: #ff3366;
+      --green: #00ff99;
+      --yellow: #ffcc00;
+      --purple: #cc00ff;
+      --border: rgba(100, 50, 150, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background particles */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(100, 0, 200, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(0, 200, 255, 0.05) 0%, transparent 20%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: rgba(10, 5, 21, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .hamburger {
+      font-size: 24px;
+      cursor: pointer;
+      user-select: none;
+      color: var(--text);
+    }
+
+    .title {
+      font-size: 20px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: var(--accent);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100vh;
+      background: rgba(10, 5, 21, 0.95);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+      z-index: 1000;
+      transition: left 0.4s ease;
+      padding-top: 20px;
+      overflow-y: auto;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 0 20px;
+    }
+
+    .logo img {
+      width: 220px;
+      height: auto;
+    }
+
+    .sidebar h3 {
+      color: var(--red);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 20px 20px 10px;
+    }
+
+    .nav-links {
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin: 8px 0;
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--card-hover);
+      border-left: 3px solid var(--accent-dark);
+    }
+
+    .nav-links a i {
+      margin-right: 14px;
+      font-size: 20px;
+      width: 24px;
+      text-align: center;
+    }
+    .logout-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background: linear-gradient(to right, #800040, #400080);
+      color: #ff99cc;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logout-btn:before {
+      content: "→";
+      margin-right: 8px;
+    }
+
+    /* Main Content */
+    main {
+      padding: 20px;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    .welcome-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(100, 0, 200, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-card::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 300px;
+      height: 300px;      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 0, 204, 0.1) 0%, transparent 70%);
+      z-index: -1;
+    }
+
+    .welcome-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .app-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 16px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .welcome-text h2 {
+      font-size: 20px;
+      margin-bottom: 4px;
+      color: var(--text-light);
+    }
+
+    .welcome-text p {
+      font-size: 24px;
+      font-weight: 700;
+      background: var(--accent);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .stat-box {
+      flex: 1;
+      background: rgba(30, 10, 50, 0.5);
+      border-radius: 12px;
+      padding: 14px;      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+    
+        .section-header {
+            background: linear-gradient(90deg, #8a2be2, #4b0082);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px 8px 0 0;
+            margin: 0 -15px 10px -15px;
+            font-size: 16px;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+    .stat-box i {
+      font-size: 20px;
+      margin-right: 8px;
+      color: var(--text-light);
+    }
+
+    .stat-value {
+      font-weight: 700;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    /* Section Title */
+    .section-title {
+      display: flex;
+      align-items: center;
+      margin: 24px 0 16px;
+      font-size: 18px;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-title:before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: var(--accent);
+      margin-right: 10px;
+    }
+
+    /* Latest News Carousel */
+    .news-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 16px;
+      padding-bottom: 16px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .news-card {
+      min-width: 280px;
+      background: var(--card-bg);      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      scroll-snap-align: start;
+      position: relative;
+    }
+
+    .news-img {
+      height: 160px;
+      background: linear-gradient(45deg, #1a0a2e, #2a103e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: #8080ff;
+      text-shadow: 0 0 10px rgba(128, 128, 255, 0.5);
+    }
+
+    .news-content {
+      padding: 16px;
+    }
+
+    .news-content h3 {
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: #ff99cc;
+    }
+
+    .news-content p {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    /* Account Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-item {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    .stat-value-large {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .role-badge {
+      background: linear-gradient(to right, #ff3366, #ff9900);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .expiry {
+      background: rgba(255, 204, 0, 0.15);
+      color: var(--yellow);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .action-btn {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+    .action-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(100, 0, 200, 0.3);
+    }
+
+    .action-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #ff0cc, #00ccff);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-size: 24px;
+      color: white;
+    }
+
+    .action-label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(10, 5, 21, 0.9);
+      padding: 14px 0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 12px;
+      padding: 8px 0;
+      transition: color 0.3s;
+    }
+
+    .nav-item.active {
+      color: #ff3366;    }
+
+    .nav-icon {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 3px solid var(--accent-dark);
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .stats-row {
+        flex-direction: column;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .news-card {
+        min-width: 100%;
+      }
+    }
+
+    /* Custom Icons (SVG Inline) */
+    .icon-home { fill: currentColor; }
+    .icon-msg { fill: currentColor; }
+    .icon-tools { fill: currentColor; }
+    .icon-anime { fill: currentColor; }
+    .icon-user { fill: currentColor; }
+    .icon-key { fill: currentColor; }
+    .icon-team { fill: currentColor; }
+    .icon-logout { fill: currentColor; }
+    .icon-wifi { fill: currentColor; }
+    .icon-phone { fill: currentColor; }
+    .icon-mail { fill: currentColor; }    .icon-trash { fill: currentColor; }
+    .icon-plus { fill: currentColor; }
+  </style>
+</head>
+<body>
+    
+    
     <!-- Konten WhatsApp -->
 <!DOCTYPE html>
 <html lang="en">
