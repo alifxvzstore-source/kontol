@@ -431,13 +431,23 @@
             </div>
         </div>
         
-        <div class="menu-btn">
-            <div class="icon-box">🛒</div>
-            <div>
-                <b style="font-size: 14px; display: block;">Buy Access Key</b>
-                <small style="color: #888; font-size: 10px;">Get Access</small>
-            </div>
-        </div>
+        <div class="menu-btn" onclick="buyAccess()">
+    <div class="icon-box">🛒</div>
+    <div>
+        <b style="font-size: 14px; display: block;">Buy Access Key</b>
+        <small style="color: #888; font-size: 10px;">Get Access</small>
+    </div>
+</div>
+
+<script>
+function buyAccess() {
+    // Ganti nomor berikut dengan nomor WhatsApp-mu (format internasional, tanpa +)
+    const phoneNumber = "62895335064844"; // contoh: Indonesia
+    const message = "Halo, saya ingin membeli access key untuk aplikasi.";
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+}
+</script>
 
         <div id="clock" style="font-size: 24px; font-weight: bold; margin-top: 20px;">00:00</div>
         <div style="color: #ff00ff; font-size: 12px;">Minggu, 5 Februari</div>
