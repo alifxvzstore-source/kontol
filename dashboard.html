@@ -1527,19 +1527,76 @@
     <!-- Konten Utama -->
     <div class="main-content">
 
+<style>
+    .user-card {
+        display: flex;
+        align-items: center; /* Menyeimbangkan posisi vertikal */
+        background-color: #4a90e2; /* Warna biru sesuai gambar */
+        padding: 15px;
+        border-radius: 12px;
+        color: white;
+        font-family: sans-serif;
+        gap: 15px; /* Jarak antar elemen */
+    }
+
+    .avatar img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column; /* Membuat OWNER dan Nama berbaris ke bawah */
+        flex-grow: 1; /* Mengambil sisa ruang yang ada */
+    }
+
+    .section-header {
+        font-size: 12px;
+        font-weight: bold;
+        background: linear-gradient(to right, #8e2de2, #4a00e0); /* Gradasi ungu */
+        padding: 2px 8px;
+        border-radius: 4px;
+        width: fit-content;
+        margin-bottom: 4px;
+    }
+
+    #displayName {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .expiry {
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 5px 10px;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 10px;
+    }
+
+    .expiry-label {
+        color: #f1c40f; /* Warna kuning emas untuk label EXPIRES */
+        font-weight: bold;
+    }
+</style>
+
 <div class="user-card">
-  <div class="avatar">
-    <img src="https://files.catbox.moe/fi25mx.jpg" alt="Avatar" />
-  </div>
-  <div class="user-info">
-    <div class="section-header">OWNER</div>
-    <span id="displayName">Drax</span>
-    <div class="expiry">
-      <div class="expiry-label">EXPIRES</div>
-      <div>2026-02-17</div>
+    <div class="avatar">
+        <img src="https://files.catbox.moe/fi25mx.jpg" alt="Avatar" />
     </div>
-  </div>
+    
+    <div class="user-info">
+        <div class="section-header">OWNER</div>
+        <span id="displayName">Drax</span>
+    </div>
+
+    <div class="expiry">
+        <div class="expiry-label">EXPIRES</div>
+        <div>2026-02-17</div>
+    </div>
 </div>
+
 
         <!-- Video Banner -->
         <div class="video-container slide">
